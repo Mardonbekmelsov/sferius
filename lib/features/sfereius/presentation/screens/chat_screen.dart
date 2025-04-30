@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sferius_ai/core/utils/style/colors.dart';
 import 'package:sferius_ai/core/utils/style/themes.dart';
 import 'package:sferius_ai/core/utils/ui_needs/app_svg.dart';
+import 'package:sferius_ai/core/widgets/custom_loader.dart';
 import 'package:sferius_ai/features/sfereius/domain/entities/chat_entity.dart';
 import 'package:sferius_ai/features/sfereius/domain/entities/message_entity.dart';
 import 'package:sferius_ai/features/sfereius/presentation/blocs/chat_bloc.dart';
@@ -35,10 +35,10 @@ class _ChatScreenState extends State<ChatScreen> {
   final ValueNotifier<String> iconAddressNotifier = ValueNotifier<String>(
     AppSvg.send,
   );
-  final ValueNotifier<bool> isReceivingMessagesNotifier = ValueNotifier(false);
 
   Timer? _messageTimer;
   int _lastMessageCount = 0;
+  bool isReceivingMessages = false; // 🚨 NEW: Prevent sending when true
 
   @override
   void initState() {
@@ -52,6 +52,7 @@ class _ChatScreenState extends State<ChatScreen> {
       );
     }
 
+    // 🔹 Listen for focus changes to prevent unnecessary loss of focus
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
         debugPrint("TextField Focused ✅");
@@ -73,109 +74,113 @@ class _ChatScreenState extends State<ChatScreen> {
     textController.dispose();
     focusNode.dispose();
     iconAddressNotifier.dispose();
-    isReceivingMessagesNotifier.dispose();
     _messageTimer?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      left: false,
-      right: false,
-      child: PopScope(
-        onPopInvokedWithResult: (didPop, result) async {
-          context.read<ChatBloc>().add(ChatEvent.closeChannel());
-          return;
-        },
-        child: Scaffold(
-          backgroundColor:
-              Theme.of(context).brightness == Brightness.dark
-                  ? Colors.black
-                  : AppColors.backgroundColor,
-          appBar: PreferredSize(
-            preferredSize: Size(393.w, 56.w),
-            child: SferiusChatAppBar(
-              title:
-                  widget.chat == null
-                      ? S.of(context).new_chat
-                      : widget.chat!.title,
-              iconAddress: AppSvg.menu,
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  barrierColor: Colors.black.withOpacity(0.5),
-                  backgroundColor: Colors.transparent,
-                  builder: (context) => MenuWidget(),
-                );
-              },
-            ),
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) async {
+        context.read<ChatBloc>().add(ChatEvent.closeChannel());
+
+        return;
+      },
+      child: Scaffold(
+        backgroundColor:
+            Theme.of(context).brightness == Brightness.dark
+                ? Colors.black
+                : AppColors.backgroundColor,
+        appBar: PreferredSize(
+          preferredSize: Size(393.w, 56.w),
+          child: SferiusChatAppBar(
+            title:
+                widget.chat == null
+                    ? S.of(context).new_chat
+                    : widget.chat!.title,
+            iconAddress: AppSvg.menu,
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                barrierColor: Colors.black.withOpacity(0.5),
+                backgroundColor: Colors.transparent,
+                builder: (context) => MenuWidget(),
+              );
+            },
           ),
-          body: BlocListener<ChatBloc, ChatState>(
-            listenWhen: (previous, current) {
-              return previous.messageEntities != current.messageEntities ||
-                  previous.typingMessage != current.typingMessage;
-            },
-            listener: (context, state) {
-              if (state.typingMessage.isNotEmpty) {
-                if (!isReceivingMessagesNotifier.value) {
-                  isReceivingMessagesNotifier.value = true;
-                }
-                _resetMessageTimer();
-              } else if (state.typingMessage.isEmpty &&
-                  isReceivingMessagesNotifier.value &&
-                  _messageTimer == null) {
-                _resetMessageTimer();
+        ),
+        body: BlocListener<ChatBloc, ChatState>(
+          listenWhen: (previous, current) {
+            return previous.messageEntities != current.messageEntities ||
+                previous.typingMessage != current.typingMessage;
+          },
+          listener: (context, state) {
+            // If assistant is typing, disable sending
+            if (state.typingMessage.isNotEmpty) {
+              if (!isReceivingMessages) {
+                setState(() => isReceivingMessages = true);
               }
+              _resetMessageTimer(); // Restart timer for inactivity
+            } else if (state.typingMessage.isEmpty &&
+                isReceivingMessages &&
+                _messageTimer == null) {
+              // Fallback: no typing and no timer running
+              _resetMessageTimer();
+            }
 
-              _lastMessageCount = state.messageEntities.length;
-            },
-            child: Column(
-              children: [
-                Expanded(
-                  child: BlocBuilder<ChatBloc, ChatState>(
-                    builder: (context, state) {
-                      allMessages = List.from(state.messageEntities);
+            _lastMessageCount = state.messageEntities.length;
+          },
+          child: Column(
+            children: [
+              Expanded(
+                child: BlocBuilder<ChatBloc, ChatState>(
+                  // buildWhen: (previous, current) {
+                  //   // 🔹 Prevent rebuilding if only the input changes
+                  //   return previous.messageEntities != current.messageEntities ||
+                  //       previous.status != current.status;
+                  // },
+                  builder: (context, state) {
+                    allMessages = List.from(state.messageEntities);
 
-                      return ListView.builder(
-                        reverse: true,
-                        padding: REdgeInsets.all(8),
-                        itemCount:
-                            state.messageEntities.length +
-                            (state.typingMessage.isNotEmpty ? 1 : 0),
-                        itemBuilder: (context, index) {
-                          if (index == 0) {
-                            if (state.typingMessage.isNotEmpty) {
-                              return AssistantMessageContainer(
-                                message: state.typingMessage,
-                              );
-                            } else if (isReceivingMessagesNotifier.value) {
-                              return const TypingIndicator();
-                            }
+                    return ListView.builder(
+                      reverse: true, // Latest message at the bottom
+                      padding: EdgeInsets.all(16.w),
+                      itemCount:
+                          state.messageEntities.length +
+                          (state.typingMessage.isNotEmpty ? 1 : 0),
+                      itemBuilder: (context, index) {
+                        // Typing dots (loading animation) when there's no visible message yet
+                        if (index == 0) {
+                          if (state.typingMessage.isNotEmpty) {
+                            return AssistantMessageContainer(
+                              message: state.typingMessage,
+                            );
+                          } else if (isReceivingMessages) {
+                            return const TypingIndicator();
                           }
+                        }
 
-                          final message =
-                              state.messageEntities[(state
-                                          .typingMessage
-                                          .isNotEmpty ||
-                                      isReceivingMessagesNotifier.value)
-                                  ? index - 1
-                                  : index];
+                        // Display existing messages
+                        final message =
+                            state.messageEntities[(state
+                                        .typingMessage
+                                        .isNotEmpty ||
+                                    isReceivingMessages)
+                                ? index - 1
+                                : index];
 
-                          return message.role == 'user'
-                              ? UserMessageContainer(message: message.content)
-                              : AssistantMessageContainer(
-                                message: message.content,
-                              );
-                        },
-                      );
-                    },
-                  ),
+                        return message.role == 'user'
+                            ? UserMessageContainer(message: message.content)
+                            : AssistantMessageContainer(
+                              message: message.content,
+                            );
+                      },
+                    );
+                  },
                 ),
-                _buildMessageInput(),
-              ],
-            ),
+              ),
+              _buildMessageInput(),
+            ],
           ),
         ),
       ),
@@ -186,11 +191,19 @@ class _ChatScreenState extends State<ChatScreen> {
     _messageTimer?.cancel();
     _messageTimer = Timer(const Duration(seconds: 2), () {
       if (mounted) {
-        isReceivingMessagesNotifier.value = false;
+        setState(() {
+          isReceivingMessages = false;
+        });
       }
       _messageTimer = null;
       debugPrint("Assistant finished typing. Input re-enabled.");
     });
+  }
+
+  void _handleMessageEnd(void Function(VoidCallback) setState) {
+    isReceivingMessages = false; // ✅ Enable sending
+    setState(() {});
+    debugPrint("Ready to send a new message.");
   }
 
   Widget _buildMessageInput() {
@@ -207,40 +220,32 @@ class _ChatScreenState extends State<ChatScreen> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
-            child: ValueListenableBuilder<bool>(
-              valueListenable: isReceivingMessagesNotifier,
-              builder: (context, isReceivingMessages, _) {
-                return ConstrainedBox(
-                  constraints: BoxConstraints(maxHeight: 150.w),
-                  child: TextFormField(
-                    key: const ValueKey("chat_input_field"),
-                    enabled: !isReceivingMessages,
-                    focusNode: focusNode,
-                    controller: textController,
-                    onChanged: (value) {
-                      iconAddressNotifier.value = AppSvg.send;
-                    },
-                    maxLines: null,
-                    minLines: 1,
-                    textInputAction: TextInputAction.newline,
-                    keyboardType: TextInputType.multiline,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                      ),
-                      hintText: 'Write something...',
-                      hintStyle: AppTextStyles.sf15grey400,
-                    ),
-                  ),
-                );
-              },
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: 150.w),
+              child: TextFormField(
+                enabled: !isReceivingMessages, // Disable input when loading
+                focusNode: focusNode,
+                controller: textController,
+                onChanged: (value) {
+                  iconAddressNotifier.value =
+                      value.isNotEmpty ? AppSvg.send : AppSvg.send;
+                },
+                maxLines: null,
+                minLines: 1,
+                textInputAction: TextInputAction.newline,
+                keyboardType: TextInputType.multiline,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(borderSide: BorderSide.none),
+                  hintText: 'Write something...',
+                  hintStyle: AppTextStyles.sf15grey400,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: 10),
-          ValueListenableBuilder2<String, bool>(
-            first: iconAddressNotifier,
-            second: isReceivingMessagesNotifier,
-            builder: (context, iconAddress, isReceivingMessages, _) {
+          ValueListenableBuilder<String>(
+            valueListenable: iconAddressNotifier,
+            builder: (context, iconAddress, _) {
               return GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap:
@@ -262,6 +267,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             );
 
                             textController.clear();
+                            // focusNode.requestFocus(); // Keep focus on input
                             iconAddressNotifier.value = AppSvg.send;
                           }
                         },
@@ -271,7 +277,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   radius: 24.w,
                   child:
                       isReceivingMessages
-                          ? const Padding(
+                          ? Container(
                             padding: EdgeInsets.all(10),
                             child: CircularProgressIndicator(
                               color: Colors.black,
@@ -284,35 +290,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-// Helper widget for listening to two ValueNotifiers at once
-class ValueListenableBuilder2<A, B> extends StatelessWidget {
-  final ValueListenable<A> first;
-  final ValueListenable<B> second;
-  final Widget Function(BuildContext, A, B, Widget?) builder;
-
-  const ValueListenableBuilder2({
-    super.key,
-    required this.first,
-    required this.second,
-    required this.builder,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder<A>(
-      valueListenable: first,
-      builder: (context, a, _) {
-        return ValueListenableBuilder<B>(
-          valueListenable: second,
-          builder: (context, b, child) {
-            return builder(context, a, b, child);
-          },
-        );
-      },
     );
   }
 }
