@@ -1,0 +1,253 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="pro.sferiusai"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="35" />
+10    xmlns:tools="http://schemas.android.com/tools"
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:4:5-5:53
+11-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:5:9-51
+12
+13    <queries>
+13-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:7:5-20:15
+14        <intent>
+14-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:8:9-13:18
+15            <action android:name="android.intent.action.VIEW" />
+15-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:9:13-10:60
+15-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:10:17-58
+16
+17            <data android:scheme="sms" />
+17-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:11:13-12:39
+17-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:12:17-37
+18        </intent>
+19        <intent>
+19-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:14:9-19:18
+20            <action android:name="android.intent.action.VIEW" />
+20-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:9:13-10:60
+20-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:10:17-58
+21
+22            <data android:scheme="tel" />
+22-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:11:13-12:39
+22-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:12:17-37
+23        </intent>
+24        <intent>
+24-->[:flutter_web_auth_2] D:\flutter projects\sferius_ai\build\flutter_web_auth_2\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:8:9-10:18
+25            <action android:name="android.support.customtabs.action.CustomTabsService" />
+25-->[:flutter_web_auth_2] D:\flutter projects\sferius_ai\build\flutter_web_auth_2\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:9:13-90
+25-->[:flutter_web_auth_2] D:\flutter projects\sferius_ai\build\flutter_web_auth_2\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:9:21-87
+26        </intent>
+27    </queries>
+28    <!--
+29         Required to query activities that can process text, see:
+30         https://developer.android.com/training/package-visibility and
+31         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+32
+33         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin.
+34    -->
+35    <queries>
+35-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:7:5-20:15
+36        <intent>
+36-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:72:9-75:18
+37            <action android:name="android.intent.action.PROCESS_TEXT" />
+37-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:73:13-72
+37-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:73:21-70
+38
+39            <data android:mimeType="text/plain" />
+39-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:11:13-12:39
+39-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:74:19-48
+40        </intent>
+41    </queries>
+42
+43    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+43-->[:connectivity_plus] D:\flutter projects\sferius_ai\build\connectivity_plus\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:7:5-79
+43-->[:connectivity_plus] D:\flutter projects\sferius_ai\build\connectivity_plus\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:7:22-76
+44
+45    <permission
+45-->[androidx.core:core:1.13.1] C:\Users\user\.gradle\caches\8.10.2\transforms\dfc2fbca530748e569b0737b09fa016f\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
+46        android:name="pro.sferiusai.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+46-->[androidx.core:core:1.13.1] C:\Users\user\.gradle\caches\8.10.2\transforms\dfc2fbca530748e569b0737b09fa016f\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
+47        android:protectionLevel="signature" />
+47-->[androidx.core:core:1.13.1] C:\Users\user\.gradle\caches\8.10.2\transforms\dfc2fbca530748e569b0737b09fa016f\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
+48
+49    <uses-permission android:name="pro.sferiusai.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+49-->[androidx.core:core:1.13.1] C:\Users\user\.gradle\caches\8.10.2\transforms\dfc2fbca530748e569b0737b09fa016f\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
+49-->[androidx.core:core:1.13.1] C:\Users\user\.gradle\caches\8.10.2\transforms\dfc2fbca530748e569b0737b09fa016f\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
+50
+51    <application
+51-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:22:5-65:19
+52        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+52-->[androidx.core:core:1.13.1] C:\Users\user\.gradle\caches\8.10.2\transforms\dfc2fbca530748e569b0737b09fa016f\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
+53        android:extractNativeLibs="true"
+54        android:icon="@mipmap/ic_launcher"
+54-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:24:9-43
+55        android:label="Sferius AI" >
+55-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:23:9-35
+56        <activity
+56-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:25:9-46:20
+57            android:name="pro.sferiusai.MainActivity"
+57-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:26:13-41
+58            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+58-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:31:13-163
+59            android:exported="true"
+59-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:27:13-36
+60            android:hardwareAccelerated="true"
+60-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:32:13-47
+61            android:launchMode="singleTop"
+61-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:28:13-43
+62            android:taskAffinity=""
+62-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:29:13-36
+63            android:theme="@style/LaunchTheme"
+63-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:30:13-47
+64            android:windowSoftInputMode="adjustResize" >
+64-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:33:13-55
+65
+66            <!--
+67                 Specifies an Android theme to apply to this Activity as soon as
+68                 the Android process has started. This theme is visible to the user
+69                 while the Flutter UI initializes. After that, this theme continues
+70                 to determine the Window background behind the Flutter UI.
+71            -->
+72            <meta-data
+72-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:38:13-41:17
+73                android:name="io.flutter.embedding.android.NormalTheme"
+73-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:39:15-70
+74                android:resource="@style/NormalTheme" />
+74-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:40:15-52
+75
+76            <intent-filter>
+76-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:42:13-45:29
+77                <action android:name="android.intent.action.MAIN" />
+77-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:43:17-68
+77-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:43:25-66
+78
+79                <category android:name="android.intent.category.LAUNCHER" />
+79-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:44:17-76
+79-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:44:27-74
+80            </intent-filter>
+81        </activity>
+82        <!--
+83             Don't delete the meta-data below.
+84             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+85        -->
+86
+87        <activity
+87-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:50:10-61:20
+88            android:name="com.linusu.flutter_web_auth_2.CallbackActivity"
+88-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:51:13-74
+89            android:exported="true" >
+89-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:52:13-36
+90            <intent-filter android:label="flutter_web_auth_2" >
+90-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:53:13-60:29
+90-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:53:28-62
+91                <action android:name="android.intent.action.VIEW" />
+91-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:9:13-10:60
+91-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:10:17-58
+92
+93                <category android:name="android.intent.category.DEFAULT" />
+93-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:56:17-76
+93-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:56:27-73
+94                <category android:name="android.intent.category.BROWSABLE" />
+94-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:57:17-78
+94-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:57:27-75
+95
+96                <data android:scheme="callbacksferiusai" />
+96-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:11:13-12:39
+96-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:12:17-37
+97            </intent-filter>
+98        </activity>
+99
+100        <meta-data
+100-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:62:9-64:33
+101            android:name="flutterEmbedding"
+101-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:63:13-44
+102            android:value="2" />
+102-->D:\flutter projects\sferius_ai\android\app\src\main\AndroidManifest.xml:64:13-30
+103
+104        <activity
+104-->[:url_launcher_android] D:\flutter projects\sferius_ai\build\url_launcher_android\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:8:9-11:74
+105            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+105-->[:url_launcher_android] D:\flutter projects\sferius_ai\build\url_launcher_android\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:9:13-74
+106            android:exported="false"
+106-->[:url_launcher_android] D:\flutter projects\sferius_ai\build\url_launcher_android\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:10:13-37
+107            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+107-->[:url_launcher_android] D:\flutter projects\sferius_ai\build\url_launcher_android\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml:11:13-71
+108
+109        <uses-library
+109-->[androidx.window:window:1.2.0] C:\Users\user\.gradle\caches\8.10.2\transforms\aed2861b2b6894f7067df3f3f96b791f\transformed\jetified-window-1.2.0\AndroidManifest.xml:23:9-25:40
+110            android:name="androidx.window.extensions"
+110-->[androidx.window:window:1.2.0] C:\Users\user\.gradle\caches\8.10.2\transforms\aed2861b2b6894f7067df3f3f96b791f\transformed\jetified-window-1.2.0\AndroidManifest.xml:24:13-54
+111            android:required="false" />
+111-->[androidx.window:window:1.2.0] C:\Users\user\.gradle\caches\8.10.2\transforms\aed2861b2b6894f7067df3f3f96b791f\transformed\jetified-window-1.2.0\AndroidManifest.xml:25:13-37
+112        <uses-library
+112-->[androidx.window:window:1.2.0] C:\Users\user\.gradle\caches\8.10.2\transforms\aed2861b2b6894f7067df3f3f96b791f\transformed\jetified-window-1.2.0\AndroidManifest.xml:26:9-28:40
+113            android:name="androidx.window.sidecar"
+113-->[androidx.window:window:1.2.0] C:\Users\user\.gradle\caches\8.10.2\transforms\aed2861b2b6894f7067df3f3f96b791f\transformed\jetified-window-1.2.0\AndroidManifest.xml:27:13-51
+114            android:required="false" />
+114-->[androidx.window:window:1.2.0] C:\Users\user\.gradle\caches\8.10.2\transforms\aed2861b2b6894f7067df3f3f96b791f\transformed\jetified-window-1.2.0\AndroidManifest.xml:28:13-37
+115
+116        <provider
+116-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\user\.gradle\caches\8.10.2\transforms\bb10008c4b33ee9597583412a41828ed\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:24:9-32:20
+117            android:name="androidx.startup.InitializationProvider"
+117-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\user\.gradle\caches\8.10.2\transforms\bb10008c4b33ee9597583412a41828ed\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:25:13-67
+118            android:authorities="pro.sferiusai.androidx-startup"
+118-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\user\.gradle\caches\8.10.2\transforms\bb10008c4b33ee9597583412a41828ed\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:26:13-68
+119            android:exported="false" >
+119-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\user\.gradle\caches\8.10.2\transforms\bb10008c4b33ee9597583412a41828ed\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:27:13-37
+120            <meta-data
+120-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\user\.gradle\caches\8.10.2\transforms\bb10008c4b33ee9597583412a41828ed\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+121                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+121-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\user\.gradle\caches\8.10.2\transforms\bb10008c4b33ee9597583412a41828ed\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+122                android:value="androidx.startup" />
+122-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\user\.gradle\caches\8.10.2\transforms\bb10008c4b33ee9597583412a41828ed\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+123            <meta-data
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+124                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+124-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+125                android:value="androidx.startup" />
+125-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+126        </provider>
+127
+128        <receiver
+128-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+129            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+129-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+130            android:directBootAware="false"
+130-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+131            android:enabled="true"
+131-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+132            android:exported="true"
+132-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+133            android:permission="android.permission.DUMP" >
+133-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+134            <intent-filter>
+134-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+135                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+135-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+135-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+136            </intent-filter>
+137            <intent-filter>
+137-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+138                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+138-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+138-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+139            </intent-filter>
+140            <intent-filter>
+140-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+141                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+141-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+141-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+142            </intent-filter>
+143            <intent-filter>
+143-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+144                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+144-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+144-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\user\.gradle\caches\8.10.2\transforms\5aacd87baa6feaa7bece87b01e7698f0\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+145            </intent-filter>
+146        </receiver>
+147    </application>
+148
+149</manifest>

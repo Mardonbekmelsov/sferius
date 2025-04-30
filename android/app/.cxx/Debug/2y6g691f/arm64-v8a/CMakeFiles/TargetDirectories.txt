@@ -1,0 +1,2 @@
+D:/flutter projects/sferius_ai/android/app/.cxx/Debug/2y6g691f/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/flutter projects/sferius_ai/android/app/.cxx/Debug/2y6g691f/arm64-v8a/CMakeFiles/rebuild_cache.dir
