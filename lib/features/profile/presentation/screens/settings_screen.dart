@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sferius_ai/features/profile/presentation/bloc/authenticate_bloc.dart/authenticate_bloc.dart';
+import 'package:sferius_ai/features/profile/presentation/bloc/authenticate_bloc.dart/authenticate_state.dart';
 import 'package:sferius_ai/features/profile/presentation/widget/settings/actions_widget.dart';
 import 'package:sferius_ai/features/profile/presentation/widget/settings/interface_settings_widget.dart';
 import 'package:sferius_ai/generated/l10n.dart';
@@ -48,8 +51,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 height: 15.h,
                 child: SvgPicture.asset(
                   AppSvg.arrow,
-                    height: 14.sp,
-                width: 9.sp,
+                  height: 14.sp,
+                  width: 9.sp,
                   colorFilter: ColorFilter.mode(
                     Theme.of(context).brightness == Brightness.dark
                         ? AppColors.cF8F8F8
@@ -76,7 +79,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             children: [
               const InterfaceSettingsWidget(),
               SizedBox(height: 10.h),
-              const ActionsWidget(),
+              BlocBuilder<AuthenticateBloc, AuthenticateState>(
+                builder: (context, state) {
+                  if (state is Authenticated) {
+                    return ActionsWidget();
+                  }
+                  return Container();
+                },
+              ),
             ],
           ),
         ),

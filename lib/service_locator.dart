@@ -65,6 +65,8 @@ init() async {
 
   //sferius blocs, repos and datasources
   sl.registerFactory(() => ChatRemoteDataSource(dio: sl<DioConfig>().client));
-  sl.registerFactory(() => ChatRepositoryImpl(sl<ChatRemoteDataSource>()));
+  sl.registerFactory(
+    () => ChatRepositoryImpl(sl<ChatRemoteDataSource>(), sl<LocalConfig>()),
+  );
   sl.registerFactory(() => ChatBloc(sl<ChatRepositoryImpl>()));
 }

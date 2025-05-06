@@ -19,19 +19,20 @@ class ActionsItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 60.h,
-      margin: EdgeInsets.only(bottom: 10.h),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100.r),
-        color: Theme.of(context).brightness == Brightness.dark
-            ? AppColors.c2C2C2E
-            : AppColors.white,
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: GestureDetector(
-          onTap: onTap,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 60.h,
+        margin: EdgeInsets.only(bottom: 10.h),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100.r),
+          color:
+              Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.c2C2C2E
+                  : AppColors.white,
+        ),
+        child: Material(
+          color: Colors.transparent,
           child: Row(
             children: [
               CircleAvatar(
@@ -40,17 +41,19 @@ class ActionsItemWidget extends StatelessWidget {
                 child: SvgPicture.asset(
                   appSvg,
                   height: 18.h,
-                  colorFilter:
-                      const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                  colorFilter: const ColorFilter.mode(
+                    Colors.white,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
               SizedBox(width: 10.w),
               Text(
                 title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium
-                    ?.copyWith(fontSize: 17.sp, color: AppColors.cFF3B30),
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontSize: 17.sp,
+                  color: AppColors.cFF3B30,
+                ),
               ),
             ],
           ),

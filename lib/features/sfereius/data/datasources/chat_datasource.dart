@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:sferius_ai/core/constants/app_constants.dart';
 import 'package:sferius_ai/core/error/exception.dart';
 import 'package:sferius_ai/features/sfereius/data/models/chat_model.dart';
 import 'package:sferius_ai/features/sfereius/data/models/message_model.dart';
@@ -107,6 +108,12 @@ class ChatRemoteDataSource {
       print("❌ Error Creating Chat: $e");
       rethrow;
     }
+  }
+
+  Future<void> deleteChat(String id, String token) async {
+    final url = "https://api.ai.sfere.pro/v1/chat/$id";
+
+    await dio.delete(url, options: Options(headers: {'Authorization': token}));
   }
 
   /// Sends a message over WebSocket

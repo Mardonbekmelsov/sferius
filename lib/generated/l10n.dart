@@ -694,6 +694,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Thanks for your feedback!`
+  String get thanks_feedback {
+    return Intl.message(
+      'Thanks for your feedback!',
+      name: 'thanks_feedback',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

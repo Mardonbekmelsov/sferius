@@ -77,6 +77,72 @@ String toString() {
 /// @nodoc
 
 
+class _DeleteChat implements ChatEvent {
+   _DeleteChat(this.id);
+  
+
+ final  String id;
+
+/// Create a copy of ChatEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DeleteChatCopyWith<_DeleteChat> get copyWith => __$DeleteChatCopyWithImpl<_DeleteChat>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeleteChat&&(identical(other.id, id) || other.id == id));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,id);
+
+@override
+String toString() {
+  return 'ChatEvent.deleteChat(id: $id)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DeleteChatCopyWith<$Res> implements $ChatEventCopyWith<$Res> {
+  factory _$DeleteChatCopyWith(_DeleteChat value, $Res Function(_DeleteChat) _then) = __$DeleteChatCopyWithImpl;
+@useResult
+$Res call({
+ String id
+});
+
+
+
+
+}
+/// @nodoc
+class __$DeleteChatCopyWithImpl<$Res>
+    implements _$DeleteChatCopyWith<$Res> {
+  __$DeleteChatCopyWithImpl(this._self, this._then);
+
+  final _DeleteChat _self;
+  final $Res Function(_DeleteChat) _then;
+
+/// Create a copy of ChatEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? id = null,}) {
+  return _then(_DeleteChat(
+null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
 class _JoinChat implements ChatEvent {
    _JoinChat(this.chatId);
   
@@ -160,12 +226,12 @@ _$GetAllChatsCopyWith<_GetAllChats> get copyWith => __$GetAllChatsCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetAllChats&&(identical(other.userId, userId) || other.userId == userId)&&const DeepCollectionEquality().equals(other.authenticateBloc, authenticateBloc));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetAllChats&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.authenticateBloc, authenticateBloc) || other.authenticateBloc == authenticateBloc));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,userId,const DeepCollectionEquality().hash(authenticateBloc));
+int get hashCode => Object.hash(runtimeType,userId,authenticateBloc);
 
 @override
 String toString() {
@@ -197,10 +263,10 @@ class __$GetAllChatsCopyWithImpl<$Res>
 
 /// Create a copy of ChatEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? authenticateBloc = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? authenticateBloc = null,}) {
   return _then(_GetAllChats(
 null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as int,freezed == authenticateBloc ? _self.authenticateBloc : authenticateBloc // ignore: cast_nullable_to_non_nullable
+as int,null == authenticateBloc ? _self.authenticateBloc : authenticateBloc // ignore: cast_nullable_to_non_nullable
 as AuthenticateBloc,
   ));
 }
@@ -487,12 +553,12 @@ $ChatStateCopyWith<ChatState> get copyWith => _$ChatStateCopyWithImpl<ChatState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatState&&const DeepCollectionEquality().equals(other.status, status)&&const DeepCollectionEquality().equals(other.chats, chats)&&const DeepCollectionEquality().equals(other.chat, chat)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other.messageEntities, messageEntities)&&(identical(other.typingMessage, typingMessage) || other.typingMessage == typingMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatState&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.chats, chats)&&(identical(other.chat, chat) || other.chat == chat)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other.messageEntities, messageEntities)&&(identical(other.typingMessage, typingMessage) || other.typingMessage == typingMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(status),const DeepCollectionEquality().hash(chats),const DeepCollectionEquality().hash(chat),message,const DeepCollectionEquality().hash(messageEntities),typingMessage);
+int get hashCode => Object.hash(runtimeType,status,const DeepCollectionEquality().hash(chats),chat,message,const DeepCollectionEquality().hash(messageEntities),typingMessage);
 
 @override
 String toString() {
@@ -524,9 +590,9 @@ class _$ChatStateCopyWithImpl<$Res>
 
 /// Create a copy of ChatState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = freezed,Object? chats = freezed,Object? chat = freezed,Object? message = freezed,Object? messageEntities = null,Object? typingMessage = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? chats = freezed,Object? chat = freezed,Object? message = freezed,Object? messageEntities = null,Object? typingMessage = null,}) {
   return _then(_self.copyWith(
-status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as Status,chats: freezed == chats ? _self.chats : chats // ignore: cast_nullable_to_non_nullable
 as List<ChatEntity>?,chat: freezed == chat ? _self.chat : chat // ignore: cast_nullable_to_non_nullable
 as ChatEntity?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
@@ -578,12 +644,12 @@ _$ChatStateCopyWith<_ChatState> get copyWith => __$ChatStateCopyWithImpl<_ChatSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatState&&const DeepCollectionEquality().equals(other.status, status)&&const DeepCollectionEquality().equals(other._chats, _chats)&&const DeepCollectionEquality().equals(other.chat, chat)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other._messageEntities, _messageEntities)&&(identical(other.typingMessage, typingMessage) || other.typingMessage == typingMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatState&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other._chats, _chats)&&(identical(other.chat, chat) || other.chat == chat)&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other._messageEntities, _messageEntities)&&(identical(other.typingMessage, typingMessage) || other.typingMessage == typingMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(status),const DeepCollectionEquality().hash(_chats),const DeepCollectionEquality().hash(chat),message,const DeepCollectionEquality().hash(_messageEntities),typingMessage);
+int get hashCode => Object.hash(runtimeType,status,const DeepCollectionEquality().hash(_chats),chat,message,const DeepCollectionEquality().hash(_messageEntities),typingMessage);
 
 @override
 String toString() {
@@ -615,9 +681,9 @@ class __$ChatStateCopyWithImpl<$Res>
 
 /// Create a copy of ChatState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? status = freezed,Object? chats = freezed,Object? chat = freezed,Object? message = freezed,Object? messageEntities = null,Object? typingMessage = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? chats = freezed,Object? chat = freezed,Object? message = freezed,Object? messageEntities = null,Object? typingMessage = null,}) {
   return _then(_ChatState(
-status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as Status,chats: freezed == chats ? _self._chats : chats // ignore: cast_nullable_to_non_nullable
 as List<ChatEntity>?,chat: freezed == chat ? _self.chat : chat // ignore: cast_nullable_to_non_nullable
 as ChatEntity?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable

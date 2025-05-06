@@ -5,6 +5,8 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sferius_ai/core/route/app_router.dart';
 import 'package:sferius_ai/features/profile/data/datasources/local_auth_datasources.dart';
 import 'package:sferius_ai/features/profile/presentation/bloc/authenticate_bloc.dart/authenticate_bloc.dart';
 import 'package:sferius_ai/features/profile/presentation/bloc/authenticate_bloc.dart/authenticate_event.dart';
@@ -31,6 +33,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final result = await FlutterWebAuth2.authenticate(
         url: url,
         callbackUrlScheme: callbackUrlScheme,
+        options: FlutterWebAuth2Options(useWebview: false),
       );
 
       // log(result);

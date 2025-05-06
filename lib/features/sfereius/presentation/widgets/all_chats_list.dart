@@ -11,6 +11,7 @@ import 'package:sferius_ai/core/widgets/custom_loader.dart';
 import 'package:sferius_ai/features/profile/presentation/bloc/authenticate_bloc.dart/authenticate_bloc.dart';
 import 'package:sferius_ai/features/sfereius/domain/entities/chat_entity.dart';
 import 'package:sferius_ai/features/sfereius/presentation/blocs/chat_bloc.dart';
+import 'package:sferius_ai/features/sfereius/presentation/widgets/chat_shimmer.dart';
 import 'package:sferius_ai/service_locator.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -35,7 +36,7 @@ class _AllChatsListState extends State<AllChatsList> {
     return BlocBuilder<ChatBloc, ChatState>(
       builder: (context, state) {
         if (state.status == Status.Loading) {
-          return const SliverToBoxAdapter(child: CustomLoader());
+          return SliverToBoxAdapter(child: ChatShimmer());
         } else if (state.status == Status.Error) {
           return const SliverToBoxAdapter(child: CustomErrorWidgetSearch());
         } else if (state.status == Status.Success) {

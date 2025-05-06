@@ -132,6 +132,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "tabs": MessageLookupByLibrary.simpleMessage("Tabs"),
     "tech_support": MessageLookupByLibrary.simpleMessage("Tech Support"),
     "text_size": MessageLookupByLibrary.simpleMessage("Text Size"),
+    "thanks_feedback": MessageLookupByLibrary.simpleMessage(
+      "Thanks for your feedback!",
+    ),
     "today": MessageLookupByLibrary.simpleMessage("Today"),
     "turn_on_location": MessageLookupByLibrary.simpleMessage(
       "Turn on location to see weather",

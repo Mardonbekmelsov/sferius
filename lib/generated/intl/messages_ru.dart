@@ -146,6 +146,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Техническая поддержка",
     ),
     "text_size": MessageLookupByLibrary.simpleMessage("Размер текста"),
+    "thanks_feedback": MessageLookupByLibrary.simpleMessage(
+      "Спасибо за ваш отзыв!",
+    ),
     "today": MessageLookupByLibrary.simpleMessage("Сегодня"),
     "turn_on_location": MessageLookupByLibrary.simpleMessage(
       "Включите геолокацию, чтобы увидеть погоду",

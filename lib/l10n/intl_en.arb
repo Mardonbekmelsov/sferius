@@ -87,5 +87,6 @@
   "open_app_settings": "Open app settings",
   "error": "Error",
   "location_unexpected": "Unexpected error in location",
-  "delete_account": "Delete account"
+  "delete_account": "Delete account",
+  "thanks_feedback" : "Thanks for your feedback!"
 }

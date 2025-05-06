@@ -7,6 +7,7 @@ import 'package:sferius_ai/core/utils/style/colors.dart';
 import 'package:sferius_ai/core/utils/style/themes.dart';
 import 'package:sferius_ai/core/utils/ui_needs/app_svg.dart';
 import 'package:sferius_ai/core/widgets/custom_loader.dart';
+import 'package:sferius_ai/features/profile/presentation/bloc/authenticate_bloc.dart/authenticate_bloc.dart';
 import 'package:sferius_ai/features/sfereius/domain/entities/chat_entity.dart';
 import 'package:sferius_ai/features/sfereius/domain/entities/message_entity.dart';
 import 'package:sferius_ai/features/sfereius/presentation/blocs/chat_bloc.dart';
@@ -16,6 +17,7 @@ import 'package:sferius_ai/features/sfereius/presentation/widgets/sferius_chat_a
 import 'package:sferius_ai/features/sfereius/presentation/widgets/typing_indicator.dart';
 import 'package:sferius_ai/features/sfereius/presentation/widgets/user_message_container.dart';
 import 'package:sferius_ai/generated/l10n.dart';
+import 'package:sferius_ai/service_locator.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -83,6 +85,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return PopScope(
       onPopInvokedWithResult: (didPop, result) async {
         context.read<ChatBloc>().add(ChatEvent.closeChannel());
+        context.read<ChatBloc>().add(ChatEvent.getAllChats(1, sl<AuthenticateBloc>()));
 
         return;
       },

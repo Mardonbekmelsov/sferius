@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sferius_ai/features/profile/presentation/screens/info_screen.dart';
 import 'package:sferius_ai/features/profile/presentation/screens/profile_screen.dart';

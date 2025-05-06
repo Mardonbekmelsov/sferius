@@ -6,6 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:sferius_ai/core/config/local_config.dart';
 import 'package:sferius_ai/core/error/exception.dart';
 import 'package:sferius_ai/core/error/failure.dart';
+import 'package:sferius_ai/features/profile/data/datasources/local_auth_datasources.dart';
 import 'package:sferius_ai/features/sfereius/data/datasources/chat_datasource.dart';
 import 'package:sferius_ai/features/sfereius/domain/entities/chat_entity.dart';
 import 'package:sferius_ai/features/sfereius/domain/entities/message_entity.dart';
@@ -14,14 +15,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatRepositoryImpl implements ChatRepository {
   final ChatRemoteDataSource remoteDataSource;
+  final LocalConfig localConfig;
 
-  ChatRepositoryImpl(this.remoteDataSource);
+  ChatRepositoryImpl(this.remoteDataSource, this.localConfig);
 
   @override
   Future<Either<Failure, List<ChatEntity>>> getAllChats(int userId) async {
     log("chats repo get chats enter");
-    final sharedPreferences = await SharedPreferences.getInstance();
-    LocalConfig localConfig = LocalConfig(sharedPreferences: sharedPreferences);
 
     final token = await localConfig.getToken();
 
@@ -48,9 +48,6 @@ class ChatRepositoryImpl implements ChatRepository {
 
   @override
   Stream<String> createChat() async* {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    LocalConfig localConfig = LocalConfig(sharedPreferences: sharedPreferences);
-
     try {
       await for (var message in remoteDataSource.createChat()) {
         yield message;
@@ -61,10 +58,13 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
-  Stream<String> joinChat(String chatId) async* {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    LocalConfig localConfig = LocalConfig(sharedPreferences: sharedPreferences);
+  Future<void> deleteChat(String id) async {
+    final token = await localConfig.getToken();
+    await remoteDataSource.deleteChat(id, token!);
+  }
 
+  @override
+  Stream<String> joinChat(String chatId) async* {
     final token = await localConfig.getToken();
 
     try {
@@ -79,8 +79,7 @@ class ChatRepositoryImpl implements ChatRepository {
   @override
   Stream<String> sendMessage(String message, String? chatId) async* {
     log("🔵 Sending: $message");
-    final sharedPreferences = await SharedPreferences.getInstance();
-    LocalConfig localConfig = LocalConfig(sharedPreferences: sharedPreferences);
+
     final token = await localConfig.getToken();
 
     try {
@@ -100,15 +99,16 @@ class ChatRepositoryImpl implements ChatRepository {
 
   @override
   Future<Either<Failure, List<MessageEntity>>> getMessagesByChatId(
-      String chatId, int userId) async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    LocalConfig localConfig = LocalConfig(sharedPreferences: sharedPreferences);
-
+    String chatId,
+    int userId,
+  ) async {
     final token = await localConfig.getToken();
 
     try {
-      final fetchedMessages =
-          await remoteDataSource.getMessagesByChatId(chatId, token!);
+      final fetchedMessages = await remoteDataSource.getMessagesByChatId(
+        chatId,
+        token!,
+      );
       return Right(fetchedMessages.map((m) => m.toEntity()).toList());
     } catch (e) {
       return Left(ServerFailure());

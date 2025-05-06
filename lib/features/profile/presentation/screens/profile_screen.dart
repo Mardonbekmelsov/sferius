@@ -107,6 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           context.read<AuthenticateBloc>().add(
                             CheckAuthenticate(),
                           );
+                          context.goNamed("sferius");
                         },
                         titleColor: AppColors.white,
                       ),

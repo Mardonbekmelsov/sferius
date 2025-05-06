@@ -29,6 +29,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     on<_SendMessage>(_onSendMessage);
     on<_CloseChannel>(_onCloseChannel);
     on<_ClearMessages>(_onClearMessages);
+    on<_DeleteChat>(_onDeleteChat);
   }
 
   Future<void> _onCreateChat(_CreateChat event, Emitter<ChatState> emit) async {
@@ -42,15 +43,31 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           add(ChatEvent.newMessageReceived(message));
         },
         onError: (error) {
-          emit(state.copyWith(
-              status: Status.Error, message: "Failed to create chat"));
+          emit(
+            state.copyWith(
+              status: Status.Error,
+              message: "Failed to create chat",
+            ),
+          );
         },
       );
       emit(state.copyWith(status: Status.Success));
     } catch (e) {
-      emit(state.copyWith(
-          status: Status.Error, message: "Failed to create chat"));
+      emit(
+        state.copyWith(status: Status.Error, message: "Failed to create chat"),
+      );
     }
+  }
+
+  Future<void> _onDeleteChat(_DeleteChat event, emit) async {
+    final List<ChatEntity> newList = List.from(state.chats!);
+    newList.removeWhere((element) {
+      return element.id == event.id;
+    });
+
+    await chatRepositoryImpl.deleteChat(event.id);
+
+    emit(state.copyWith(chats: newList));
   }
 
   Future<void> _onCloseChannel(_CloseChannel event, emit) async {
@@ -59,21 +76,27 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   Future<void> _onGetMessageByChatId(_GetMessagesByChatId event, emit) async {
-    emit(state.copyWith(
-      status: Status.Loading,
-    ));
-    final response =
-        await chatRepositoryImpl.getMessagesByChatId(event.chatId, 1);
-    response.fold((error) {
-      emit(state.copyWith(
-          status: Status.Error, message: _failureMessage(error)));
-    }, (data) {
-      emit(state.copyWith(status: Status.Success, messageEntities: data));
-    });
+    emit(state.copyWith(status: Status.Loading));
+    final response = await chatRepositoryImpl.getMessagesByChatId(
+      event.chatId,
+      1,
+    );
+    response.fold(
+      (error) {
+        emit(
+          state.copyWith(status: Status.Error, message: _failureMessage(error)),
+        );
+      },
+      (data) {
+        emit(state.copyWith(status: Status.Success, messageEntities: data));
+      },
+    );
   }
 
   Future<void> _onGetAllChats(
-      _GetAllChats event, Emitter<ChatState> emit) async {
+    _GetAllChats event,
+    Emitter<ChatState> emit,
+  ) async {
     emit(state.copyWith(status: Status.Loading));
     final response = await chatRepositoryImpl.getAllChats(event.userId);
     response.fold(
@@ -81,11 +104,12 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         if (error is AuthorizationFailure) {
           event.authenticateBloc.add(CheckAuthenticate());
         } else {
-
-        emit(state.copyWith(
-          status: Status.Error,
-          message: _failureMessage(error),
-        ));
+          emit(
+            state.copyWith(
+              status: Status.Error,
+              message: _failureMessage(error),
+            ),
+          );
         }
       },
       (data) {
@@ -99,24 +123,33 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     await _chatSubscription?.cancel();
 
     try {
-      _chatSubscription = chatRepositoryImpl.joinChat(event.chatId).listen(
-        (message) {
-          add(ChatEvent.newMessageReceived(message));
-        },
-        onError: (error) {
-          emit(state.copyWith(
-              status: Status.Error, message: "Failed to join chat"));
-        },
-      );
+      _chatSubscription = chatRepositoryImpl
+          .joinChat(event.chatId)
+          .listen(
+            (message) {
+              add(ChatEvent.newMessageReceived(message));
+            },
+            onError: (error) {
+              emit(
+                state.copyWith(
+                  status: Status.Error,
+                  message: "Failed to join chat",
+                ),
+              );
+            },
+          );
       emit(state.copyWith(status: Status.Success));
     } catch (e) {
       emit(
-          state.copyWith(status: Status.Error, message: "Failed to join chat"));
+        state.copyWith(status: Status.Error, message: "Failed to join chat"),
+      );
     }
   }
 
   Future<void> _onSendMessage(
-      _SendMessage event, Emitter<ChatState> emit) async {
+    _SendMessage event,
+    Emitter<ChatState> emit,
+  ) async {
     print("📡 BLoC получил событие sendMessage");
 
     try {
@@ -126,20 +159,21 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       if (state.typingMessage.isNotEmpty) {
         log("typing message is not empty");
         updatedMessages.insert(
-            1, MessageEntity(role: 'assistant', content: state.typingMessage));
+          1,
+          MessageEntity(role: 'assistant', content: state.typingMessage),
+        );
       }
 
       // emit(state.copyWith(typingMessage: "gay"));
 
-      emit(state.copyWith(
-        messageEntities: updatedMessages,
-        typingMessage: "",
-      ));
+      emit(state.copyWith(messageEntities: updatedMessages, typingMessage: ""));
 
       log("1 ${event.message}");
 
-      await for (final msg
-          in chatRepositoryImpl.sendMessage(event.message, event.chatId)) {
+      await for (final msg in chatRepositoryImpl.sendMessage(
+        event.message,
+        event.chatId,
+      )) {
         // String message = jsonDecode(msg);
         print("🟢 BLoC получил слово: $msg");
 
@@ -154,15 +188,18 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     } catch (e) {
       // log("⚠️ Failed to parse message chunk: $e - Chunk: $msg");
       print("❌ Ошибка в BLoC: $e");
-      emit(
-        state.copyWith(status: Status.Error),
-      );
+      emit(state.copyWith(status: Status.Error));
     }
   }
 
   void _onClearMessages(_ClearMessages event, emit) {
-    emit(state.copyWith(
-        status: Status.Success, messageEntities: [], typingMessage: ""));
+    emit(
+      state.copyWith(
+        status: Status.Success,
+        messageEntities: [],
+        typingMessage: "",
+      ),
+    );
   }
 
   // void _onNewMessageReceived(
